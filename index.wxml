@@ -1,0 +1,101 @@
+  <!-- 用户 openid -->
+  <view class="userinfo">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      class="userinfo-avatar"
+      style="background-image: url({{avatarUrl}})"
+    ></button>
+  </view>
+
+<!-- sample.wxml -->
+<!-- hover-class: 指定点击时的样式类 -->
+
+<navigator url="/fstab/fstab?title=fstab" hover-class="navigator-hover" class=".page-body-form-item">/etc/fsatb</navigator>
+
+<navigator url="/issue/issue?title=issue" hover-class="navigator-hover" class=".page-body-form-item">/etc/issue</navigator>
+
+<navigator url="/bashrc/bashrc?title=bashrc" hover-class="navigator-hover" class=".page-body-form-item">/etc/skel/.bashrc</navigator>
+
+<navigator url="/sysctl/sysctl?title=sysctl" hover-class="navigator-hover" class=".page-body-form-item">/etc/sysctl.d/99-sysctl.conf</navigator>
+
+<navigator url="/crontab/crontab?title=crontab" hover-class="navigator-hover" class=".page-body-form-item">/etc/crontab</navigator>
+
+<navigator url="/config/config?title=config" hover-class="navigator-hover" class=".page-body-form-item">/etc/selinux/config</navigator>
+
+<navigator url="/group/group?title=group" hover-class="navigator-hover" class=".page-body-form-item">/etc/group</navigator>
+
+<navigator url="/hosts/hosts?title=hosts" hover-class="navigator-hover" class=".page-body-form-item">/etc/hosts</navigator>
+
+<navigator url="/ifcfg/ifcfg?title=ifcfg" hover-class="navigator-hover" class=".page-body-form-item">/etc/sysconfig/network-scripts/ifcfg-enp0s3</navigator>
+
+<navigator url="/inittab/inittab?title=inittab" hover-class="navigator-hover" class=".page-body-form-item">/etc/inittab</navigator>
+
+<navigator url="/mtab/mtab?title=mtab" hover-class="navigator-hover" class=".page-body-form-item">/etc/mtab</navigator>
+
+<navigator url="/passwd/passwd?title=passwd" hover-class="navigator-hover" class=".page-body-form-item">/etc/passwd</navigator>
+
+<navigator url="/profile/profile?title=profile" hover-class="navigator-hover" class=".page-body-form-item">/etc/profile</navigator>
+
+<navigator url="/resolv/resolv?title=resolv" hover-class="navigator-hover" class=".page-body-form-item">/etc/resolv.config</navigator>
+
+<navigator url="/shadow/shadow?title=shadow" hover-class="navigator-hover" class=".page-body-form-item">/etc/shadow</navigator>
+
+<navigator url="/shells/shells?title=shells" hover-class="navigator-hover" class=".page-body-form-item">/etc/shells</navigator>
+
+<navigator url="/useradd/useradd?title=profile" hover-class="navigator-hover" class=".page-body-form-item">/etc/defaule/useradd</navigator>
+
+<navigator url="/yumconfig/yumconfig?title=yumconfig" hover-class="navigator-hover" class=".page-body-form-item">/etc/yum.conf</navigator>
+
+<navigator url="/anacrontab/anacrontab?title=anacrontab" hover-class="navigator-hover" class=".page-body-form-item">/etc/anacrontab</navigator>
+
+<navigator url="/chrony.sh/chrony.sh?title=chrony.sh" hover-class="navigator-hover" class=".page-body-form-item">/etc/dhcp/dhclient.d/chrony.sh</navigator>
+
+<navigator url="/iptables-config/iptables-config?title=iptables-config" hover-class="navigator-hover" class=".page-body-form-item">/etc/sysconfig/iptables-config</navigator>
+
+<navigator url="/functions/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+<navigator url="/hahahahahah/functions?title=functions" hover-class="navigator-hover" class=".page-body-form-item">/etc/rc.d/init.d/functions</navigator>
+<navigator url=/fuck/fuck?title=fuck hover-class=navigator-hover class=.page-body-form-item>/etc/rc.d/init.d/functions</navigator>
+<navigator url=/fuck/fuck?title=fuck hover-class=navigator-hover class=.page-body-form-item>/etc/rc.d/init.d/functions</navigator>
+<navigator url=/fuck/fuck?title=fuck hover-class=navigator-hover class=.page-body-form-item>/etc/rc.d/init.d/functions</navigator> 
+
+<navigator url=/fuck/fuck?title=fuck hover-class=navigator-hover class=.page-body-form-item>/etc/rc.d/init.d/functions</navigator> 
+
+<navigator url=/fuck/fuck?title=fuck hover-class=navigator-hover class=.page-body-form-item>/etc/rc.d/init.d/functions</navigator> 
+
+<navigator url=/fuck/fuck?title=fuck hover-class=navigator-hover class=.page-body-form-item>/etc/rc.d/init.d/functions</navigator> 
+
+<!-- foundMe -->
+<!-- 
+<navigator url="/profile/profile?title=profile" hover-class="navigator-hover" class=".page-body-form-item">跳转到新页面</navigator>
+ -->
+
+<!--参考网站 https://www.jianshu.com/p/50657f9af5b4 -->
+<!-- 参考： https://www.cnblogs.com/zxj015/p/4457868.html -->
+
+<!-- 产品意见 -->
+<view class='item'  bindtap='onAdvanceClick'>
+  <view class='icon'>
+    <image src='./advice.png' style="width:22px;height:21px;"></image>
+  </view>
+  <view class='itemName'>
+    <view>产品意见</view>
+  </view>
+  <view class='right'>></view>
+</view>
+<view class='hr'></view>
