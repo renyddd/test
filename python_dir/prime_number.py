@@ -16,9 +16,8 @@ def primes():
         it = filter(_not_divisible(n), it)
 
 for n in primes():
-    if n < 1000:
-        pass
-    else:
+    if n < 10000000:
         print(n)
+    else:
         break
 
