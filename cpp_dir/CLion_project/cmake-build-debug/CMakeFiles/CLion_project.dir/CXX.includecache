@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/renyddd/gitRepositories/test/cpp_dir/CLion_project/Singleton.cpp
+Singleton.h
+/home/renyddd/gitRepositories/test/cpp_dir/CLion_project/Singleton.h
+cstdio
+-
+iostream
+-
+
+/home/renyddd/gitRepositories/test/cpp_dir/CLion_project/Singleton.h
+iostream
+-
+

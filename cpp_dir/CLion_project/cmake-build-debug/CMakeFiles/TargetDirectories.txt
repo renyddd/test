@@ -1,0 +1,3 @@
+/home/renyddd/gitRepositories/test/cpp_dir/CLion_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/renyddd/gitRepositories/test/cpp_dir/CLion_project/cmake-build-debug/CMakeFiles/CLion_project.dir
+/home/renyddd/gitRepositories/test/cpp_dir/CLion_project/cmake-build-debug/CMakeFiles/edit_cache.dir
