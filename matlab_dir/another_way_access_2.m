@@ -27,7 +27,7 @@ while (1)
     figure(1);
     subplot(2, 2, 2); plot(y)
     title('信号的时域波形');
-    output = filter(Hd, y)
+    output = filter(Hd, y);
     subplot(2, 2, 4); plot(output)
     title('滤波后的时域波形');
 
@@ -54,5 +54,6 @@ while (1)
 
     pause(3); 
     sound(output, fs);
+    cla
 
 end
