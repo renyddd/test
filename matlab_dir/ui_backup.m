@@ -22,7 +22,7 @@ function varargout = untitled1(varargin)
 
 % Edit the above text to modify the response to help untitled1
 
-% Last Modified by GUIDE v2.5 09-Jan-2020 16:24:23
+% Last Modified by GUIDE v2.5 08-Jan-2020 22:33:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -76,6 +76,7 @@ varargout{1} = handles.output;
 % 显示傅里叶变换的频谱,以及一些全局变量
 function show_subplot()
 global y; global fs; global output;
+% figure
 subplot(2, 2, 2); plot(y)
 title('信号的时域波形');
 subplot(2, 2, 4); plot(output)
@@ -108,11 +109,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global y; global fs; global output        % 每次使用时都需要进行 global 的声明
-global record;
-if isempty(record)
-    record = 'record.m4a';
-end
-[y,fs]=audioread(record);
+[y,fs]=audioread('record.m4a');
 
 subplot(2, 2, 2); plot(y)
 n = length(y);          % 选取变换的点数 
@@ -138,7 +135,6 @@ global y; global fs; global output
 output = filter(Hd, y);
 subplot(2, 2, 4); plot(output)
 show_subplot()
-freqz(Hd);
 sound(output, fs);
 
 
@@ -152,7 +148,6 @@ global y; global fs; global output
 output = filter(Hd, y);
 subplot(2, 2, 4); plot(output)
 show_subplot()
-freqz(Hd);
 sound(output, fs);
 
 
@@ -166,7 +161,6 @@ global y; global fs; global output
 output = filter(Hd, y);
 subplot(2, 2, 4); plot(output)
 show_subplot()
-freqz(Hd);
 sound(output, fs);
 
 
@@ -180,7 +174,6 @@ global y; global fs; global output
 output = filter(Hd, y);
 subplot(2, 2, 4); plot(output)
 show_subplot()
-freqz(Hd);
 sound(output, fs);
 
 
@@ -194,40 +187,4 @@ global y; global fs; global output
 output = filter(Hd, y);
 subplot(2, 2, 4); plot(output)
 show_subplot()
-freqz(Hd);
 sound(output, fs);
-
-
-% --- Executes on selection change in popupmenu1.
-function popupmenu1_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu1
-global record;
-val = get(hObject,'value');
-str = get(hObject,'String');
-switch val
-    case 1
-        record = str{1};
-    case 2
-        record = str{2};
-    case 3
-        record = str{3};
-    case 4
-        record = str{4};
-end
-
-% --- Executes during object creation, after setting all properties.
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
