@@ -75,7 +75,7 @@ static inline void list_del_init(struct list_head *entry)
 #define list_for_each(pos, head) \
 	for (pos = (head)->next; prefetch(pos->next), pos != (head); \
 			pos = pos->next)
-			*/
+*/
 #define __list_for_each(pos, head) \
 	for (pos = (head)->next; pos != (head); pos = pos->next)
 
