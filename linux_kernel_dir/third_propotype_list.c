@@ -78,12 +78,18 @@ static inline void list_del(struct list_head *entry)
 	for (pos = list_first_entry(head, typeof(*pos), member);	\
 	     &pos->member != (head);					\
 	     pos = list_next_entry(pos, member))
+
+#define list_for_each_safe(pos, n, head) \
+	for (pos = (head)->next, n = pos->next; pos != (head); \
+		pos = n, n = pos->next)
+
 /*
  * --------------------------------------------------------------------------
- * 这个版本已经可以正确使用 container_of 宏
- * 及正确构建嵌入 list_head 结构的链表。
- * 同时也有正确使用 list_first_entry 函数的例子。
- * 20200126
+ * 在版本 2 的基础上，
+ * 发现了在使用 malloc 分配类型错误的问题，
+ * 在这里主要探究 list_entry 之类的使用。
+ * 2020-01-26-21:49
+ * renyddd@gmail.com
  */
 
 struct fox {
@@ -97,36 +103,43 @@ struct fox {
 
 int main()
 {
-        // LIST_HEAD(fox_list);
-        // 换一种创建方式试试看
-        struct fox fox_list;
-        INIT_LIST_HEAD(&fox_list.list);
-
-        struct fox *f; // loop item.
-        struct list_head *tmp;
+        LIST_HEAD(fox_list);
+        
+        struct list_head *pos, *n; //n for removal use.
+        struct fox *f;
         int i;
 
-        for (i = 0; i < 5; i++) {
-                f = (struct fox *) malloc(sizeof(struct fox)); // 注意原型 1 中此处的错误
-                // notice !!
-                f->tail_length = 40 + i;
-                f->weight = 0 + i;
-                f->is_fantastic = true;
-                list_add_tail(&f->list, &fox_list.list); // use this function.
-        }
-        // look out the first entry.
-        // f = list_first_entry(&fox_list, struct fox, list);
-        // printf("info: %ld,%ld,%d\n", f->tail_length, f->weight, f->is_fantastic);
-
-        i = 0; // monitor the num of the loop.
-        list_for_each_entry(f, &(fox_list.list), list) {
-                        printf("the fox info: %ld,%ld,%d\n", f->tail_length, f->weight, f->is_fantastic);
-                i++;
-                // 为什么此处的循环里还是多一次，也无法使用printf语句？malloc 分配错误
+        for (i = 0; i < 3; i++) {
+                f = (struct fox *)malloc(sizeof(struct fox));
+                f->tail_length = 0 + i;
+                f->weight = 40 + i;
+                f->is_fantastic = i % 2;
+                list_add_tail(&f->list, &fox_list);
         }
 
-        printf("the true end %d.\n", i);
-//        list_for_each(tmp, &fox_list);
+        i = 0; // count the loop times.
+        list_for_each_entry(f, &fox_list, list) {
+                printf("fox info: %ld, %ld, %d\n", f->tail_length, f->weight, f->is_fantastic);
+                i++; // 循环是从表头结点开始
+        }
+        printf("the loop turns %d times\n", i);
+
+        i = 0;
+        list_for_each(pos, &fox_list) {
+                printf("%d memory address: %p\n", i++, pos);
+                f = list_entry(pos, struct fox, list);
+                // 这种方式同样能接近外层封装的结构体变量，按需输出
+                // printf("fox info: %ld, %ld, %d\n", f->tail_length, f->weight, f->is_fantastic);
+        }
+        printf("the loop turns %d times\n", i);
+
+        // free action.
+        list_for_each_safe(pos, n, &fox_list) {
+                f = list_entry(pos, struct fox, list);
+                free(f);
+        }
+
+
 
         return 0;
 }
