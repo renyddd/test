@@ -1,0 +1,18 @@
+digraph {
+    label = "\nstruct fox";
+    rankdir = LR; // 布局从左到右
+    node [shape = record];
+    listnode1 [label = "<data>data | <prev>prev | <next>next"];
+    listnode2 [label = "<data>data | <prev>prev | <next>next"];
+    listnode3 [label = "<data>data | <prev>prev | <next>next"];
+
+    node [shape = plaintext, label = "NULL"];
+
+    listnode1:prev:w -> listnode3;
+    listnode1:next -> listnode2;
+    listnode2:next -> listnode3;
+    listnode2:prev -> listnode1;
+    listnode3:next:e -> listnode1;
+    listnode3:prev -> listnode2;
+}
+

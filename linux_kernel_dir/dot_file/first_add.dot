@@ -1,0 +1,10 @@
+digraph {
+    rankdir = LR; // 布局从左到右
+    node [shape = record];
+    listnode1 [label = "<next>next | <prev>prev "];
+    listnode2 [label = "<data>data | <prev>prev | <next>next"];
+
+    node [shape = plaintext, label = "NULL"];
+
+}
+

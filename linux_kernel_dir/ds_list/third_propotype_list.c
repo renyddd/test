@@ -93,12 +93,10 @@ static inline void list_del(struct list_head *entry)
  */
 
 struct fox {
-        long tail_length;
-        long weight;
+        int num;
         bool is_fantastic;
         struct list_head list;
 };
-
 
 
 int main()
@@ -111,15 +109,14 @@ int main()
 
         for (i = 0; i < 3; i++) {
                 f = (struct fox *)malloc(sizeof(struct fox));
-                f->tail_length = 0 + i;
-                f->weight = 40 + i;
+                f->num = 0 + i;
                 f->is_fantastic = i % 2;
                 list_add_tail(&f->list, &fox_list);
         }
 
         i = 0; // count the loop times.
         list_for_each_entry(f, &fox_list, list) {
-                printf("fox info: %ld, %ld, %d\n", f->tail_length, f->weight, f->is_fantastic);
+                printf("fox number:  %d, if a fantastic one: %d\n", f->num, f->is_fantastic);
                 i++; // 循环是从表头结点开始
         }
         printf("the loop turns %d times\n", i);

@@ -1,0 +1,18 @@
+digraph {
+    label = "\nstruct normal_list";
+    rankdir = LR; // 布局从左到右
+    node [shape = record];
+    listnode1 [label = "<data>data | <next>next | <prev>prev"];
+    listnode2 [label = "<data>data | <next>next | <prev>prev"];
+    listnode3 [label = "<data>data | <next>next | <prev>prev"];
+
+    node [shape = plaintext, label = "NULL"];
+
+    listnode1:prev -> listnode3;
+    listnode1:next -> listnode2;
+    listnode2:next -> listnode3;
+    listnode2:prev -> listnode1;
+    listnode3:next:e -> listnode1:c;
+    listnode3:prev -> listnode2;
+}
+

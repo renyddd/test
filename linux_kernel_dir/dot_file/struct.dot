@@ -1,0 +1,9 @@
+digraph structs {
+        node [shape=record];
+
+
+        struct_fox [shape=record, label="data | {prev | next}"];
+
+        struct3 [shape=record,label="struct_fox"];
+        struct_fox -> struct3;
+}

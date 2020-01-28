@@ -1,0 +1,12 @@
+digraph {
+    label = "\nfox_list";
+    rankdir = LR; // 布局从左到右
+    node [shape = record];
+    listnode1 [label = "<next>next | <prev>prev "];
+
+    node [shape = plaintext, label = "NULL"];
+
+    listnode1:prev:w -> listnode1:c;
+    listnode1:next:e -> listnode1:prev:s;
+}
+
