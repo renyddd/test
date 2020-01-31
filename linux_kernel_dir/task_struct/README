@@ -1,0 +1,10 @@
+struct thread_info 
+        /arch/x86/include/asm/thread_info.h
+
+struct task_struct
+        /include/linux/sched.h
+                How to find it in vim? /task_struct {
+
+
+reference:
+- https://www.ibm.com/developerworks/cn/linux/l-linux-process-management/index.html
