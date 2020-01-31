@@ -8,3 +8,7 @@ struct task_struct
 
 reference:
 - https://www.ibm.com/developerworks/cn/linux/l-linux-process-management/index.html
+- https://blog.csdn.net/tigerjb/category_1301189.html
+
+write your answer: #include <linux/init_task.h>
+        https://stackoverflow.com/questions/47586576/why-i-get-this-error-init-task-undeclared-first-use-in-this-function
