@@ -9,6 +9,115 @@ struct task_struct
 reference:
 - https://www.ibm.com/developerworks/cn/linux/l-linux-process-management/index.html
 - https://blog.csdn.net/tigerjb/category_1301189.html
+- https://www.linuxidc.com/Linux/2011-02/32132.htm
+- https://blog.csdn.net/yeshennet/article/details/82315604
+
 
 write your answer: #include <linux/init_task.h>
         https://stackoverflow.com/questions/47586576/why-i-get-this-error-init-task-undeclared-first-use-in-this-function
+
+
+
+## 模块
+在开篇处还是先为你放上这次主程序的全部代码：
+```c
+// traverse.c
+#include <linux/kernel.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/list.h>
+#include <linux/init_task.h>
+
+static int traverse_init(void)
+{
+        struct task_struct *task;
+
+        printk(KERN_INFO "Hello, world. \n");
+
+        for_each_process(task)
+                printk(KERN_INFO "%s[%d]\n", task->comm, task->pid);
+
+        return 0;
+}
+
+static void traverse_exit(void)
+{
+       printk(KERN_INFO "Finish.\n");
+}
+
+module_init(traverse_init);
+module_exit(traverse_exit);
+```
+嘿，就只有这么点。这里既保留了先写 Hello, world 的传统，又对我们的内核进程进行了遍历。
+
+在阅读完上面的代码之后，你会发现这与你之前所学的 C 语言有那么几处不同。
+- 头文件不同，连之前最常用的 stdio.h 都没有。
+- 输出不是 printf 而是 printk。
+- 没有 main 函数，取而代之的却是 __init, __exit 这种东西。
+
+再加上一个 Makefile 文件：
+```makefile
+obj-m:=traverse.o
+
+all:
+	make -C /usr/src/linux-headers-$(shell uname -r) M=$(shell pwd) modules
+clean:
+	make -C /usr/src/linux-headers-$(shell uname -r) M=$(shell pwd) clean
+```
+此时你就可以开心地为你的内核编译模块了。
+
+```bash
+make
+```
+如果你编译成功了的话，在当前目录下进行 ls 操作，会发现多了很多新文件，其中对我们最重要的就是 traverse.ko 文件了。
+
+```bash
+sudo insmod traverse.ko
+```
+这里并没有任何输出信息，就代表着你已成功地将模块插入到了内核中。
+
+是时候看看输出结果了，但是 prink 并不会将内容输出至屏幕，它是对内核信息的一种记录。就跟你传给它的参数 KERN_INFO 的意思一样，是你在告诉内核，这有警告信息，请你记录下来。
+
+接下来从内核中将刚刚的模块删除了吧：
+
+```bash
+sudo rmmod traverse
+```
+同样执行这一步时，你在终端上并不能看到提示信息。
+
+```bash
+dmesg
+```
+操作后，你就能一览你刚刚编写的模块的结果了。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200131200501314.png =200x)![在这里插入图片描述](https://img-blog.csdnimg.cn/20200131200512425.png =200x)
+从开头的 Hello, world 到各个进程的相关信息，以及最后你执行删除操作时所留下的自定义 Finish 信息，你期待的全部都在这里了。
+## 进程
+至于模块就先说那么多，毕竟这一片还是以说内核链表在内核中的应用为主，那当然就需要告诉你，进程描述符的作用了。
+
+task_struct 类型的进程描述符中包含着一个进程的所有信息：
+
+```c
+struct task_struct {
+	// ...
+	pid_t pid;
+	char comm[TASK_COMM_LEN];
+
+	struct list_head tasks;
+	// ...
+};
+```
+内核源码文件为 include/linux/sched.h，你可以在其中找到 task_struct 的完整超长定义。其中此次你将要用到的字段有 pid，进程号；comm，进程名；还有内嵌其中的 task，链表结构。
+
+再加上一个，进行便利操作，又是对 list_entry 进行了封装的宏：
+```c
+#define for_each_process(p) \
+	for (p = &init_task ; (p = list_entry_rcu((p)->tasks.next, \
+																					struct task_struct, tasks)   \
+																				) != &init_task ; )
+```
+本文只是一次对内核链表，在内核中应用的简单体验，希望对你理解内核链表有帮助。
+## 参考
+[1]Peter Jay Salzman; Michael Burian; Ori Pomerantz.The Linux Kernel Module Programming Guide[EB/OL].https://blog.csdn.net/yeshennet/article/details/82315604,2007-05-18
+[2]Bovet, D. P.; Cesati, M..深入理解Linux内核[M].中国电力出版社:北京,2007:85.
+[3]Love, R..Linux内核设计与实现[M].机械工业出版社:北京,2011.6:21.

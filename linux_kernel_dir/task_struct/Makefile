@@ -1,10 +1,6 @@
 obj-m:=traverse.o
 
-CURRENT_PATH :=$(shell pwd)
-VERSION_NUM :=$(shell uname -r)
-LINUX_PATH := /usr/src/linux-headers-$(VERSION_NUM)
-
 all:
-	make -C $(LINUX_PATH) M=$(CURRENT_PATH) modules
+	make -C /usr/src/linux-headers-$(shell uname -r) M=$(shell pwd) modules
 clean:
-	make -C $(LINUX_PATH) M=$(CURRENT_PATH) clean
+	make -C /usr/src/linux-headers-$(shell uname -r) M=$(shell pwd) clean
