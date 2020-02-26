@@ -1,1 +1,0 @@
-cmd_/home/renyddd/gitRepositories/test/linux_kernel_dir/task_struct/traverse.mod := { echo  /home/renyddd/gitRepositories/test/linux_kernel_dir/task_struct/traverse.o; echo; } > /home/renyddd/gitRepositories/test/linux_kernel_dir/task_struct/traverse.mod
