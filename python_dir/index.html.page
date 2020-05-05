@@ -1,0 +1,173 @@
+<h2>平滑</h2>
+
+<p>
+    原始图像：
+    <img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/20200428182831218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" />
+</p>
+
+<h3>h1</h3>
+
+<p><img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/20200428182846555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" /></p>
+
+<h3>h2</h3>
+
+<p><img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/20200428183002456.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" /></p>
+
+<h2>锐化</h2>
+
+<p>
+    原始图像：
+    <img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/20200428183209308.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" />
+</p>
+
+<h3>h3</h3>
+
+<p><img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/2020042818323470.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" /></p>
+
+<h3>h4</h3>
+
+<p><img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/20200428183315564.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" /></p>
+
+<h3>h5</h3>
+
+<p><img alt="在这里插入图片描述" src="https://img-blog.csdnimg.cn/20200428184857745.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM5MTMxMA==,size_16,color_FFFFFF,t_70" /></p>
+
+
+<div class="highlight highlight-source-python">
+    <pre><span class="pl-k">import</span> cv2 <span class="pl-k">as</span> cv        
+<span class="pl-k">import</span> numpy <span class="pl-k">as</span> np      
+<span class="pl-k">import</span> matplotlib.pyplot <span class="pl-k">as</span> plt
+
+
+ifd1 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>input.jpg<span class="pl-pds">'</span></span> <span class="pl-c"><span class="pl-c">#</span> dayanta</span>
+ofd <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>
+
+
+<span class="pl-k">def</span> <span class="pl-en">read_gray_img</span>(<span class="pl-smi">fd</span>):
+    img <span class="pl-k">=</span> cv.imread(fd)    
+    img <span class="pl-k">=</span> cv.cvtColor(img, cv.<span class="pl-c1">COLOR_BGR2GRAY</span>)    
+    <span class="pl-k">return</span> img
+
+
+<span class="pl-k">def</span> <span class="pl-en">add_noise</span>(<span class="pl-smi">img</span>):
+    res <span class="pl-k">=</span> np.copy(img)
+    row, col <span class="pl-k">=</span> res.shape
+
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">5000</span>):
+        x <span class="pl-k">=</span> np.random.randint(<span class="pl-c1">0</span>, row)
+        y <span class="pl-k">=</span> np.random.randint(<span class="pl-c1">0</span>, col)
+        res[x, y] <span class="pl-k">=</span> <span class="pl-c1">255</span>  
+
+    <span class="pl-k">return</span> res
+
+
+<span class="pl-k">def</span> <span class="pl-en">box_filter</span>(<span class="pl-smi">img</span>):
+    res <span class="pl-k">=</span> cv.boxFilter(img, <span class="pl-k">-</span><span class="pl-c1">1</span>, (<span class="pl-c1">3</span>,<span class="pl-c1">3</span>), <span class="pl-v">normalize</span><span class="pl-k">=</span><span class="pl-c1">1</span>)
+    cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>, res)
+
+
+<span class="pl-k">def</span> <span class="pl-en">gaussian_filter</span>(<span class="pl-smi">img</span>):
+    res <span class="pl-k">=</span> cv.GaussianBlur(img, (<span class="pl-c1">3</span>,<span class="pl-c1">3</span>), <span class="pl-c1">0</span>)
+    cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>, res)
+
+
+<span class="pl-k">def</span> <span class="pl-en">laplace_filter</span>(<span class="pl-smi">img</span>):
+    res <span class="pl-k">=</span> cv.Laplacian(img, cv.<span class="pl-c1">CV_16S</span>, <span class="pl-v">ksize</span><span class="pl-k">=</span><span class="pl-c1">3</span>)
+    cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>, res)
+
+
+<span class="pl-k">def</span> <span class="pl-en">lap_manual</span>(<span class="pl-smi">img</span>, <span class="pl-smi">choice</span>):
+    laplace_operator1 <span class="pl-k">=</span> np.array([[<span class="pl-c1">0</span> ,<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">0</span>],
+                                  [<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">5</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>],
+                                  [<span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">0</span>]])
+    laplace_operator2 <span class="pl-k">=</span> np.array([[<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>],
+                                  [<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">9</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>],
+                                  [<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>]])
+    laplace_operator3 <span class="pl-k">=</span> np.array([[<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>],
+                                  [<span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">2</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">0</span>],
+                                  [<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">2</span>, <span class="pl-c1">16</span>, <span class="pl-k">-</span><span class="pl-c1">2</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>],
+                                  [<span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">2</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">0</span>],
+                                  [<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>]])
+
+    pad <span class="pl-k">=</span> np.pad(img, (<span class="pl-c1">1</span>,<span class="pl-c1">1</span>), <span class="pl-v">mode</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>constant<span class="pl-pds">'</span></span>, <span class="pl-v">constant_values</span><span class="pl-k">=</span><span class="pl-c1">0</span>)
+    r, c <span class="pl-k">=</span> pad.shape
+    out <span class="pl-k">=</span> np.copy(pad)
+
+    <span class="pl-k">if</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h3<span class="pl-pds">'</span></span>:
+        choice <span class="pl-k">=</span> laplace_operator1
+    <span class="pl-k">elif</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h4<span class="pl-pds">'</span></span>:
+        choice <span class="pl-k">=</span> laplace_operator2
+    <span class="pl-k">elif</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h5<span class="pl-pds">'</span></span>:
+        choice <span class="pl-k">=</span> laplace_operator3
+        pad <span class="pl-k">=</span> np.pad(img, (<span class="pl-c1">2</span>,<span class="pl-c1">2</span>), <span class="pl-v">mode</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>constant<span class="pl-pds">'</span></span>, <span class="pl-v">constant_values</span><span class="pl-k">=</span><span class="pl-c1">0</span>)
+        r, c <span class="pl-k">=</span> pad.shape
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">2</span>, r<span class="pl-k">-</span><span class="pl-c1">2</span>):
+    <span class="pl-k">for</span> j <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">2</span>, c<span class="pl-k">-</span><span class="pl-c1">2</span>):
+                R <span class="pl-k">=</span> np.sum(choice <span class="pl-k">*</span> pad[i<span class="pl-k">-</span><span class="pl-c1">2</span>:i<span class="pl-k">+</span><span class="pl-c1">3</span>, j<span class="pl-k">-</span><span class="pl-c1">2</span>:j<span class="pl-k">+</span><span class="pl-c1">3</span>])
+                out[i, j] <span class="pl-k">=</span> pad[i, j] <span class="pl-k">-</span> R
+        out <span class="pl-k">=</span> out[<span class="pl-c1">2</span>:r<span class="pl-k">-</span><span class="pl-c1">2</span>, <span class="pl-c1">2</span>:c<span class="pl-k">-</span><span class="pl-c1">2</span>]
+        cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>, out)
+    <span class="pl-k">return</span> <span class="pl-c1">None</span>
+    <span class="pl-k">else</span>:
+    <span class="pl-k">return</span> <span class="pl-c1">None</span>
+
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">1</span>, r<span class="pl-k">-</span><span class="pl-c1">1</span>):
+    <span class="pl-k">for</span> j <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">1</span>, c<span class="pl-k">-</span><span class="pl-c1">1</span>):
+            R <span class="pl-k">=</span> np.sum(choice <span class="pl-k">*</span> pad[i<span class="pl-k">-</span><span class="pl-c1">1</span>:i<span class="pl-k">+</span><span class="pl-c1">2</span>, j<span class="pl-k">-</span><span class="pl-c1">1</span>:j<span class="pl-k">+</span><span class="pl-c1">2</span>])
+            out[i, j] <span class="pl-k">=</span> pad[i, j] <span class="pl-k">-</span> R
+
+    out <span class="pl-k">=</span> out[<span class="pl-c1">1</span>:r<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">1</span>:c<span class="pl-k">-</span><span class="pl-c1">1</span>]
+    cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>, out)
+
+
+<span class="pl-k">def</span> <span class="pl-en">choose_h</span>(<span class="pl-smi">fd</span>, <span class="pl-smi">choice</span>):
+    src <span class="pl-k">=</span> read_gray_img(fd)
+    img <span class="pl-k">=</span> src <span class="pl-c"><span class="pl-c">#</span> h1, h2 noise，h3, h4 src</span>
+    noise <span class="pl-k">=</span> add_noise(img)
+
+    normalization <span class="pl-k">=</span> <span class="pl-c1">1</span> <span class="pl-c"><span class="pl-c">#</span> default normalization</span>
+    h1 <span class="pl-k">=</span> np.array([[<span class="pl-c1">1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>], 
+                   [<span class="pl-c1">1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>],
+                   [<span class="pl-c1">1</span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>]])
+    h2 <span class="pl-k">=</span> np.array([[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">1</span>],
+                   [<span class="pl-c1">2</span>, <span class="pl-c1">4</span>, <span class="pl-c1">2</span>],
+                   [<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">1</span>]])
+
+    <span class="pl-k">if</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h1<span class="pl-pds">'</span></span>:
+        choice, normalization <span class="pl-k">=</span> h1, <span class="pl-c1">9</span>
+        img <span class="pl-k">=</span> noise
+        cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>input.jpg<span class="pl-pds">'</span></span>, noise)
+    <span class="pl-k">elif</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h2<span class="pl-pds">'</span></span>:
+        choice, normalization <span class="pl-k">=</span> h2, <span class="pl-c1">16</span>
+        img <span class="pl-k">=</span> noise
+    <span class="pl-k">elif</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h3<span class="pl-pds">'</span></span>:
+        lap_manual(img, <span class="pl-s"><span class="pl-pds">'</span>h3<span class="pl-pds">'</span></span>)
+    <span class="pl-k">return</span> <span class="pl-c1">None</span>
+    <span class="pl-k">elif</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h4<span class="pl-pds">'</span></span>:
+        lap_manual(img, <span class="pl-s"><span class="pl-pds">'</span>h4<span class="pl-pds">'</span></span>)
+    <span class="pl-k">return</span> <span class="pl-c1">None</span>
+    <span class="pl-k">elif</span> choice <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">'</span>h5<span class="pl-pds">'</span></span>:
+        lap_manual(img, <span class="pl-s"><span class="pl-pds">'</span>h5<span class="pl-pds">'</span></span>)
+    <span class="pl-k">return</span> <span class="pl-c1">None</span>
+    <span class="pl-k">else</span>:
+    <span class="pl-k">return</span> <span class="pl-c1">None</span>
+
+    pad <span class="pl-k">=</span> np.pad(img, (<span class="pl-c1">1</span>,<span class="pl-c1">1</span>), <span class="pl-v">mode</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>constant<span class="pl-pds">'</span></span>, <span class="pl-v">constant_values</span><span class="pl-k">=</span><span class="pl-c1">0</span>)
+    r, c <span class="pl-k">=</span> pad.shape
+    out <span class="pl-k">=</span> np.copy(pad)
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">1</span>, r<span class="pl-k">-</span><span class="pl-c1">1</span>):
+    <span class="pl-k">for</span> j <span class="pl-k">in</span> <span class="pl-c1">range</span>(<span class="pl-c1">1</span>, c<span class="pl-k">-</span><span class="pl-c1">1</span>):
+            res <span class="pl-k">=</span> np.sum(choice <span class="pl-k">*</span> pad[i<span class="pl-k">-</span><span class="pl-c1">1</span>:i<span class="pl-k">+</span><span class="pl-c1">2</span>, j<span class="pl-k">-</span><span class="pl-c1">1</span>:j<span class="pl-k">+</span><span class="pl-c1">2</span>])
+            out[i, j] <span class="pl-k">=</span> res <span class="pl-k">/</span> normalization
+    out <span class="pl-k">=</span> out[<span class="pl-c1">1</span>:r<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">1</span>:c<span class="pl-k">-</span><span class="pl-c1">1</span>]
+    cv.imwrite(<span class="pl-s"><span class="pl-pds">'</span>output.jpg<span class="pl-pds">'</span></span>, out)
+    
+
+<span class="pl-k">def</span> <span class="pl-en">main</span>():
+    choose_h(ifd1, <span class="pl-s"><span class="pl-pds">'</span>h2<span class="pl-pds">'</span></span>)
+
+
+<span class="pl-k">if</span> <span class="pl-c1">__name__</span> <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>__main__<span class="pl-pds">"</span></span>:
+    main()
+</pre>
+</div>
